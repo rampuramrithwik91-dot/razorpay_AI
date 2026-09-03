@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BarChart2, ShieldCheck, DollarSign, Activity, HelpCircle, CheckCircle2 } from 'lucide-react';
+import { fetchJson } from '../utils/api';
 
 export default function EvaluationBenchmark() {
   const [evalData, setEvalData] = useState(null);
@@ -9,10 +10,8 @@ export default function EvaluationBenchmark() {
   const fetchEval = async () => {
     try {
       setLoading(true);
-      const res = await fetch('http://localhost:8000/api/evaluation');
-      if (res.ok) {
-        setEvalData(await res.json());
-      }
+      const data = await fetchJson('/evaluation');
+      setEvalData(data);
     } catch (err) {
       console.error(err);
     } finally {

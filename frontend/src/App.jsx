@@ -10,6 +10,7 @@ import EntityExplorer from './views/EntityExplorer';
 import PolicyEngine from './views/PolicyEngine';
 import EvaluationBenchmark from './views/EvaluationBenchmark';
 import AuditTrail from './views/AuditTrail';
+import { API_BASE, fetchJson } from './utils/api';
 
 export default function App() {
   const [currentTab, setTab] = useState('overview');
@@ -29,11 +30,8 @@ export default function App() {
   const fetchOverview = async () => {
     try {
       setLoadingOverview(true);
-      const res = await fetch('http://localhost:8000/api/dashboard/overview');
-      if (res.ok) {
-        const data = await res.json();
-        setOverviewData(data);
-      }
+      const data = await fetchJson('/dashboard/overview');
+      setOverviewData(data);
     } catch (err) {
       console.error("Error fetching overview data:", err);
     } finally {
@@ -53,7 +51,8 @@ export default function App() {
     setScenarioSteps([]);
     setCurrentStepIdx(0);
 
-    const eventSource = new EventSource('http://localhost:8000/api/demo/run-scenario');
+    const sseUrl = `${API_BASE}/demo/run-scenario`;
+    const eventSource = new EventSource(sseUrl);
 
     eventSource.onmessage = (event) => {
       try {
@@ -82,7 +81,7 @@ export default function App() {
   // Handle Reset State
   const handleResetDemoState = async () => {
     try {
-      const res = await fetch('http://localhost:8000/api/demo/reset', { method: 'POST' });
+      const res = await fetch(`${API_BASE}/demo/reset`, { method: 'POST' });
       if (res.ok) {
         await fetchOverview();
         alert("System state reset to Seed 42 baseline successfully!");

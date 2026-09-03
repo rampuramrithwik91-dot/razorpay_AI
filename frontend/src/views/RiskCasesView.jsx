@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AlertTriangle, Filter, Search, ChevronRight, ArrowUpDown } from 'lucide-react';
+import { API_BASE, fetchJson } from '../utils/api';
 
 export default function RiskCasesView({ onSelectCase }) {
   const [cases, setCases] = useState([]);
@@ -12,12 +13,9 @@ export default function RiskCasesView({ onSelectCase }) {
   const fetchCases = async () => {
     try {
       setLoading(true);
-      const url = `http://localhost:8000/api/cases?domain=${domainFilter}&severity=${severityFilter}&status=${statusFilter}`;
-      const res = await fetch(url);
-      if (res.ok) {
-        const data = await res.json();
-        setCases(data);
-      }
+      const url = `/cases?domain=${domainFilter}&severity=${severityFilter}&status=${statusFilter}`;
+      const data = await fetchJson(url);
+      setCases(data);
     } catch (err) {
       console.error("Error fetching cases:", err);
     } finally {

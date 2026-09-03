@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Share2, Search, User, Clock, ShieldAlert, ArrowRight } from 'lucide-react';
 import InteractiveGraph from '../components/InteractiveGraph';
+import { fetchJson } from '../utils/api';
 
 export default function EntityExplorer() {
   const [selectedEntityId, setSelectedEntityId] = useState("C-218");
@@ -11,14 +12,12 @@ export default function EntityExplorer() {
   const fetchData = async (eid) => {
     try {
       setLoading(true);
-      const [gRes, eRes] = await Promise.all([
-        fetch(`http://localhost:8000/api/graph?selected_entity_id=${eid}`),
-        fetch(`http://localhost:8000/api/entities/${eid}`)
+      const [gData, eData] = await Promise.all([
+        fetchJson(`/graph?selected_entity_id=${eid}`),
+        fetchJson(`/entities/${eid}`)
       ]);
-      if (gRes.ok && eRes.ok) {
-        setGraphData(await gRes.json());
-        setEntityDetail(await eRes.json());
-      }
+      setGraphData(gData);
+      setEntityDetail(eData);
     } catch (err) {
       console.error("Error fetching entity details:", err);
     } finally {

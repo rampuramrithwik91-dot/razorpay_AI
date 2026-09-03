@@ -1,6 +1,5 @@
-@import "tailwindcss";
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
 
 :root {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -9,16 +8,17 @@
   color-scheme: dark;
 }
 
-code, kbd, samp, pre, .font-mono {
-  font-family: 'JetBrains Mono', monospace;
-}
-
 body {
   margin: 0;
   padding: 0;
   background-color: #0B0F17;
   color: #E2E8F0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
+}
+
+code, kbd, samp, pre, .font-mono {
+  font-family: 'JetBrains Mono', monospace;
 }
 
 /* Custom Scrollbars */
@@ -37,9 +37,9 @@ body {
   background: #475569;
 }
 
-/* Custom UI Utility Classes */
+/* Custom Component Panels & Badges */
 .card-panel {
-  background: #141A26;
+  background-color: #141A26;
   border: 1px solid #242F42;
   border-radius: 12px;
   box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
@@ -54,31 +54,31 @@ body {
 }
 
 .badge-critical {
-  background: rgba(239, 68, 68, 0.15);
+  background-color: rgba(239, 68, 68, 0.15);
   color: #F87171;
   border: 1px solid rgba(239, 68, 68, 0.3);
 }
 
 .badge-high {
-  background: rgba(249, 115, 22, 0.15);
+  background-color: rgba(249, 115, 22, 0.15);
   color: #FB923C;
   border: 1px solid rgba(249, 115, 22, 0.3);
 }
 
 .badge-medium {
-  background: rgba(245, 158, 11, 0.15);
+  background-color: rgba(245, 158, 11, 0.15);
   color: #FBBF24;
   border: 1px solid rgba(245, 158, 11, 0.3);
 }
 
 .badge-low {
-  background: rgba(16, 185, 129, 0.15);
+  background-color: rgba(16, 185, 129, 0.15);
   color: #34D399;
   border: 1px solid rgba(16, 185, 129, 0.3);
 }
 
 .badge-info {
-  background: rgba(59, 130, 246, 0.15);
+  background-color: rgba(59, 130, 246, 0.15);
   color: #60A5FA;
   border: 1px solid rgba(59, 130, 246, 0.3);
 }

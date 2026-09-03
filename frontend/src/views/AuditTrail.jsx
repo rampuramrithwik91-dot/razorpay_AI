@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FileText, Search, Filter, ShieldCheck, Clock } from 'lucide-react';
+import { fetchJson } from '../utils/api';
 
 export default function AuditTrail() {
   const [events, setEvents] = useState([]);
@@ -10,10 +11,8 @@ export default function AuditTrail() {
   const fetchAudit = async () => {
     try {
       setLoading(true);
-      const res = await fetch('http://localhost:8000/api/audit');
-      if (res.ok) {
-        setEvents(await res.json());
-      }
+      const data = await fetchJson('/audit');
+      setEvents(data);
     } catch (err) {
       console.error(err);
     } finally {

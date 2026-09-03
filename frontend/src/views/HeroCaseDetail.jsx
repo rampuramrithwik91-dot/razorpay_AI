@@ -4,6 +4,7 @@ import {
   Share2, Clock, User, DollarSign, Activity, Check, X, Shield, ChevronRight, Lock
 } from 'lucide-react';
 import InteractiveGraph from '../components/InteractiveGraph';
+import { API_BASE, fetchJson } from '../utils/api';
 
 export default function HeroCaseDetail({ caseId = "RC-2048", onBack, onCaseUpdated }) {
   const [caseDetail, setCaseDetail] = useState(null);
@@ -15,11 +16,8 @@ export default function HeroCaseDetail({ caseId = "RC-2048", onBack, onCaseUpdat
   const fetchDetail = async () => {
     try {
       setLoading(true);
-      const res = await fetch(`http://localhost:8000/api/cases/${caseId}`);
-      if (res.ok) {
-        const data = await res.json();
-        setCaseDetail(data);
-      }
+      const data = await fetchJson(`/cases/${caseId}`);
+      setCaseDetail(data);
     } catch (err) {
       console.error("Error fetching case detail:", err);
     } finally {
@@ -34,7 +32,7 @@ export default function HeroCaseDetail({ caseId = "RC-2048", onBack, onCaseUpdat
   const handleAction = async (actionType) => {
     try {
       setIsSubmitting(true);
-      const res = await fetch(`http://localhost:8000/api/cases/${caseId}/action`, {
+      const res = await fetch(`${API_BASE}/cases/${caseId}/action`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: actionType, notes: actionNotes })
@@ -315,7 +313,7 @@ export default function HeroCaseDetail({ caseId = "RC-2048", onBack, onCaseUpdat
               <button
                 onClick={() => handleAction('CONFIRM_FRAUD')}
                 disabled={isSubmitting}
-                className="w-full py-2.5 px-4 rounded-lg bg-red-600 hover:bg-red-500 text-white font-semibold text-xs transition-all shadow-md shadow-red-900/30 flex items-center justify-center gap-2"
+                className="w-full py-2.5 px-4 rounded-lg bg-red-600 hover:bg-red-500 text-white font-semibold text-xs transition-all shadow-md shadow-red-900/30 flex items-center justify-center gap-2 cursor-pointer"
               >
                 <ShieldAlert className="w-4 h-4" /> Confirm Fraud & Block Entity
               </button>
@@ -323,7 +321,7 @@ export default function HeroCaseDetail({ caseId = "RC-2048", onBack, onCaseUpdat
               <button
                 onClick={() => handleAction('APPROVE_REFUND')}
                 disabled={isSubmitting}
-                className="w-full py-2.5 px-4 rounded-lg bg-amber-600 hover:bg-amber-500 text-white font-semibold text-xs transition-all flex items-center justify-center gap-2"
+                className="w-full py-2.5 px-4 rounded-lg bg-amber-600 hover:bg-amber-500 text-white font-semibold text-xs transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Lock className="w-4 h-4" /> Hold Refund & Require Manual Verification
               </button>
@@ -331,7 +329,7 @@ export default function HeroCaseDetail({ caseId = "RC-2048", onBack, onCaseUpdat
               <button
                 onClick={() => handleAction('DISMISS')}
                 disabled={isSubmitting}
-                className="w-full py-2.5 px-4 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium transition-all flex items-center justify-center gap-2"
+                className="w-full py-2.5 px-4 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Check className="w-4 h-4" /> Dismiss Case (False Positive)
               </button>

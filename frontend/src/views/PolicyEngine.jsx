@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Settings, Shield, CheckCircle2, Play } from 'lucide-react';
+import { fetchJson } from '../utils/api';
 
 export default function PolicyEngine() {
   const [policies, setPolicies] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/policies')
-      .then(res => res.json())
+    fetchJson('/policies')
       .then(data => setPolicies(data))
       .catch(err => console.error(err))
       .finally(() => setLoading(false));

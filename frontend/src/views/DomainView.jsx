@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ShieldAlert, RefreshCw, Scale, Info, ArrowUpRight } from 'lucide-react';
+import { fetchJson } from '../utils/api';
 
 export default function DomainView({ domainKey = "FRAUD_ABUSE", onSelectCase }) {
   const [data, setData] = useState(null);
@@ -8,11 +9,8 @@ export default function DomainView({ domainKey = "FRAUD_ABUSE", onSelectCase }) 
   const fetchDomainData = async () => {
     try {
       setLoading(true);
-      const res = await fetch(`http://localhost:8000/api/analytics/${domainKey}`);
-      if (res.ok) {
-        const json = await res.json();
-        setData(json);
-      }
+      const json = await fetchJson(`/analytics/${domainKey}`);
+      setData(json);
     } catch (err) {
       console.error("Error fetching domain analytics:", err);
     } finally {
